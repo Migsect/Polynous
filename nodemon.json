@@ -1,0 +1,9 @@
+{
+  "verbose": true,
+  "ignore": [
+    "node_modules/*.js",
+    "web_modules/*.js",
+    "README"
+  ],
+  "ext": "js html"
+}

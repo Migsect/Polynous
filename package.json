@@ -3,18 +3,25 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node --harmony ./bin/www",
+    "start-watch": "nodemon --harmony ./bin/www",
+    "webpack": "node --harmony ./node_modules/webpack/bin/webpack.js",
+    "webpack-watch": "node --harmony ./node_modules/webpack/bin/webpack.js --watch"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
+    "handlebars": "^4.0.6",
     "hbs": "~4.0.1",
     "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "socket.io": "^1.7.3",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
+    "handlebars-loader": "^1.4.0",
     "nodemon": "^1.11.0",
     "webpack": "^2.3.3"
   }
