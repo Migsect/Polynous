@@ -28,6 +28,5 @@
   "trailing": true,
   "undef": true,
   "unused": true,
-  "white": true,
-  "esversion": 6
+  "white": true
 }
