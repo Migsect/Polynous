@@ -1,1 +1,8 @@
+body {
+  font-family: monospace;
+  color: white;
+}
 
+.hidden {
+  display: none;
+}
