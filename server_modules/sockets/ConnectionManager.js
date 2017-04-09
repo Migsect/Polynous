@@ -49,22 +49,12 @@ class SocketManager
     });
 
   }
-
-  /**
-   * Cleanup the connection when the socket disconnects.
-   */
   onDisconnection(socket)
   {
     const self = this;
     const id = socket.client.id;
     self.connections.delete(id);
   }
-
-  /**
-   * Called when a connection sends a command message.
-   * If the sender is not yet a connection, then this command will be ignored.
-   * Commands are handled by their own manager.
-   */
   onCommand(socket, command, callback)
   {
     const self = this;
@@ -85,14 +75,9 @@ class SocketManager
       return;
     }
     const commandHandler = self.commandHandlers.get(connection.type);
-    commandHandler.handleCommand(connection, command, callback);
+    commandHandler.handleCommand(socket, command, callback);
   }
 
-  /**
-   * Called when the client registers their client type. This officially
-   * creates the connection. All clients must register before they can recieve
-   * updates and send commands.
-   */
   onRegister(socket, clientType, callback)
   {
     const self = this;
