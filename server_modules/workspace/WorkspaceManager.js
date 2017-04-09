@@ -35,7 +35,7 @@ class WorkspaceManager
     });
   }
 
-  handleCommand(socket, command, callback)
+  handleCommand(connection, command, callback)
   {
     const self = this;
 
@@ -45,23 +45,61 @@ class WorkspaceManager
     switch (type)
     {
       case "populate":
-        self.commandPopulate(data, callback);
+        self.commandPopulate(connection, data, callback);
+        break;
+      case "fetch":
+        self.commandFetch(connection, data, callback);
+        break;
+      case "abandon":
+        self.commandAbandon(connection, data, callback);
         break;
       default:
         callback(false);
     }
   }
 
-  commandPopulate(data, callback)
+  commandPopulate(connection, data, callback)
+    {
+      const self = this;
+      const id = data.id;
+      const workspace = self.workspaces.get(id);
+      if (workspace === undefined)
+      {
+        callback(false);
+      }
+      callback(workspace.structure);
+    }
+    /**
+     * Abandon the current file (removes the user from the connection.)
+     * Client side should also remove the file from any view.
+     */
+  commandAbandon(connection, data, callback)
+  {
+
+  }
+  commandFetch(connection, data, callback)
   {
     const self = this;
     const id = data.id;
     const workspace = self.workspaces.get(id);
-    if (!workspace)
+    if (workspace === undefined)
     {
       callback(false);
     }
-    callback(workspace.structure);
+    const fileId = data.fileId;
+    const file = workspace.files.get(fileId);
+    if (file === undefined)
+    {
+      callback(false);
+    }
+    workspace.loadFile(fileId).then(function(loadedFile)
+    {
+      callback(loadedFile.lines);
+    }).catch(function()
+    {
+      callback(false);
+    });
+
   }
 
 }

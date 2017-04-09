@@ -13,15 +13,16 @@ div.project-panel {
   width: 300px;
   height: 100%;
   flex: 0 1 auto;
-  padding: 0.25em;
   background-color: black;
   position: relative;
+  overflow-y: auto;
 }
 
 div.editor-panel {
-  background-color: green;
+  background-color: rgb(16, 16, 16);
   height: 100%;
   flex: 1 1 0px;
+  overflow-y: auto;
 }
 
 div.horizontal-resize-handle {
@@ -31,6 +32,12 @@ div.horizontal-resize-handle {
   bottom: 0px;
   right: 0px;
   width: 4px;
+}
+
+div.workspace-editor-line {
+  margin: 0px;
+  padding: 0px;
+  white-space: pre;
 }
 
 div.workspace-name {}
@@ -46,12 +53,16 @@ div.workspace-file-name {
   border-left-width: 2px;
 }
 
+div.workspace-file-name:hover {
+  cursor: pointer;
+}
+
 div.workspace-directory-items {
-  padding-left: 0.5em;
-  margin-left: 0.5em;
+  padding-left: 1em;
+  margin-left: 0em;
   border-left-style: dotted;
   border-width: 1px;
-  border-color: white;
+  border-color: rgb(255, 128, 0);
 }
 
 div.workspace-directory-name {
