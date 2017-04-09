@@ -27,20 +27,11 @@ const server = http.createServer(app);
  * Socket.io connection
  */
 const io = require("socket.io")(server);
-const SocketManager = require("../server_modules/sockets/SocketManager");
+const ConnectionManager = require("../server_modules/sockets/ConnectionManager");
 io.on("connection", function(socket)
 {
-  SocketManager.onConnection(socket);
+  ConnectionManager.onConnection(socket);
 });
-
-/**
- * Sharing the session between socketio and express app
- */
-/* Setting up socket to have access to the session variable */
-io.use(sharedsession(app.locals.middleware.session,
-{
-  autoSave: true
-}));
 
 /**
  * Listen on provided port, on all network interfaces.

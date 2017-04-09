@@ -1,9 +1,10 @@
 {
   "verbose": true,
   "ignore": [
-    "node_modules/*.js",
-    "web_modules/*.js",
-    "README"
+    "node_modules/*.js", "node_modules/*.js",
+    "web_modules/*.js", "web_modules/*.js",
+    "README",
+    "save/*"
   ],
   "ext": "js html"
 }

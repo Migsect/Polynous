@@ -4,9 +4,9 @@ const express = require("express");
 const router = express.Router();
 
 /* GET home page. */
-router.get("/", function(req, res)
+router.get("/:id", function(req, res)
 {
-  res.render("index");
+  res.render("editor");
 });
 
 module.exports = router;

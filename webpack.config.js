@@ -1,7 +1,8 @@
 module.exports = {
   entry:
   {
-    editor: "./web_modules/entry/editor.js"
+    editor: "./web_modules/entry/editor.js",
+    index: "./web_modules/entry/index.js"
   },
   output:
   {

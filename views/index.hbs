@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{title}}</title>
+
+  <!-- All the stylesheets to be used -->
+  <link rel="stylesheet" href="/stylesheets/global.css" />
+  <link rel="stylesheet" href="/stylesheets/index.css" />
+</head>
+
+<body>
+  <!-- The actual layout -->
+  <div class="app-panel">
+    <div class=page-title>Polynous</div>
+    <div class=page-subtext>Many thoughts, one place.</div>
+    <div class="workspace-creation-panel">
+      <input id="workspace-source" class="text-input" type="text"></input>
+      <input id="workspace-create" class="button-input" type="button" value="Create Workspace"></input>
+    </div>
+    <div class="workspace-list-panel"></div>
+  </div>
+
+  <!-- All Javascripts to be used within the editor -->
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="/built/index-entry.js"></script>
+</body>
+
+</html>

@@ -11,7 +11,7 @@ const directory = require(process.cwd() + "/server_modules/directory/Directory")
 
 /* Configuration options */
 const saveDir = require(process.cwd() + "/config/config").saveDir;
-const editorPath = "/editor/"
+const baseURL = "/editor/";
 
 /**
  * Workspace handles git grabbing and stuff.
@@ -52,9 +52,10 @@ class Workspace
       },
       url:
       {
+        enumerable: true,
         get: function()
         {
-          return editorPath + id;
+          return baseURL + id;
         }
       }
     });
@@ -73,12 +74,13 @@ module.exports = {
     const workspace = new Workspace(source);
     return new Promise(function(resolve, reject)
     {
+      Logger.debug("Cloning:", source);
       Git.clone(workspace.source, workspace.location).then(function()
       {
-        Logger.debug("Clone Completed!");
         workspace.regenerateDirectoryStructure();
         resolve(workspace);
       });
+
     });
   }
 };

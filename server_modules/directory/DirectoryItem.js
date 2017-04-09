@@ -2,11 +2,16 @@
 
 class DirectoryItem
 {
-  constructor(type, name, id)
+  constructor(type, path, name, id)
   {
     const self = this;
     Object.defineProperties(self,
     {
+      path:
+      {
+        enumerable: true,
+        value: path
+      },
       name:
       {
         enumerable: true,
@@ -27,4 +32,6 @@ class DirectoryItem
 
 }
 
-module.exports = DirectoryItem;
+module.exports = {
+  Class: DirectoryItem
+};

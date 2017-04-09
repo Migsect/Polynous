@@ -4,12 +4,7 @@ const Utils = require("../Utils");
 const directoryTemplate = require("./templates/directory.hbs");
 const fileTemplate = require("./templates/file.hbs");
 
-function generateFileElement(file)
-{
-  return Utils.htmlToElement(fileTemplate(file));
-}
-
-function generateDirectoryElement(directory)
+function generateDirectoryElement(directory, expandedLayers)
 {
   const directoryElement = Utils.htmlToElement(directoryTemplate(
   {
@@ -17,7 +12,10 @@ function generateDirectoryElement(directory)
     name: directory.name
   }));
   const itemsElement = directoryElement.querySelector(".workspace-directory-items");
-  console.log(itemsElement);
+  if (expandedLayers <= 0)
+  {
+    itemsElement.classList.add("hidden");
+  }
 
   const items = directory.items ? directory.items : [];
   items.forEach(function(item)
@@ -26,48 +24,82 @@ function generateDirectoryElement(directory)
     let itemElement = null;
     if (type.toLowerCase() === "directory")
     {
-      itemElement = generateDirectoryElement(item);
+      itemElement = generateDirectoryElement(item, expandedLayers - 1);
     }
     else
     {
-      itemElement = generateFileElement(item);
+      itemElement = Utils.htmlToElement(fileTemplate(item));
     }
+
     itemsElement.appendChild(itemElement);
   });
 
   const nameElement = directoryElement.querySelector(".workspace-directory-name");
   nameElement.addEventListener("click", function toggleDirectoryElement()
   {
-    itemsElement.classList.toggle("hidden")
+    itemsElement.classList.toggle("hidden");
   });
 
-  return directoryElement
+  return directoryElement;
 
 }
 
 class Workspace
 {
-  constructor(directory)
+  constructor(socketHandler)
   {
     const self = this;
     Object.defineProperties(self,
     {
-      directories:
+      id:
+      {
+        value: window.location.href.substr(window.location.href.lastIndexOf("/") + 1)
+      },
+      socketHandler:
+      {
+        value: socketHandler
+      },
+      directory:
       {
         enumerable: true,
-        value: [directory]
+        writable: true,
+        value: []
+      },
+      projectPanel:
+      {
+        value: document.querySelector(".project-panel")
+      },
+      editorPanel:
+      {
+        value: document.querySelector(".editor-panel")
       }
-    })
+    });
+  }
+
+  populate()
+  {
+    const self = this;
+    self.socketHandler.sendCommand("populate",
+    {
+      id: self.id
+    }, function populateCallback(response)
+    {
+      console.log("populate:", response);
+      self.directory = response;
+      const elements = self.generateElements();
+      Utils.convertNodeListToArray(self.projectPanel.querySelectorAll(".workspace-item")).forEach(function(node)
+      {
+        self.projectPanel.removeChild(node);
+      });
+      console.log(elements);
+      self.projectPanel.appendChild(elements);
+    });
   }
 
   generateElements()
   {
     const self = this;
-    const directoryElements = self.directories.map(function generateHTMLMapCallback(item)
-    {
-      return generateDirectoryElement(item);
-    });
-    return directoryElements;
+    return generateDirectoryElement(self.directory, 1);
   }
 }
 
