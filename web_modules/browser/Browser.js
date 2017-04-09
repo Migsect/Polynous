@@ -38,10 +38,12 @@ class Browser
       self.socketHandler.sendCommand("create",
       {
         source: source
-      }, function workspaceCreateCallback(url)
+      }, function workspaceCreateCallback(response)
       {
+        window.location.assign(response.url);
         console.log(url);
       });
+
     });
   }
 

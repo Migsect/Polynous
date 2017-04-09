@@ -77,6 +77,7 @@ class SocketManager
     const commandHandler = self.commandHandlers.get(connection.type);
     commandHandler.handleCommand(socket, command, callback);
   }
+
   onRegister(socket, clientType, callback)
   {
     const self = this;
