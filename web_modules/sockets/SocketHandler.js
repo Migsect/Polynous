@@ -41,7 +41,7 @@ class SocketHandler
       self.handlers.set(type, []);
     }
     const handlerList = self.handlers.get(type);
-    handlerList.append(handler);
+    handlerList.push(handler);
   }
 
   onUpdate(event)

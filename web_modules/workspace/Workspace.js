@@ -36,10 +36,12 @@ class Workspace
       },
       lines:
       {
+        writable: true,
         value: []
       },
       currentFile:
       {
+        writable: true,
         value: null
       }
     });
@@ -49,7 +51,7 @@ class Workspace
       // const fileId = data.fileId;
       const lineIndex = data.lineIndex;
       const lineEdit = data.lineEdit;
-
+      console.log(lineIndex, lineEdit);
       self.lines[lineIndex].innerHTML = lineEdit;
     });
   }
@@ -88,18 +90,21 @@ class Workspace
   /**
    * Sends edit to the server
    */
-  edit(lineIndex, newText)
+  edit(lineIndex, lineEdit)
   {
     const self = this;
-    self.socketHandler.edit("edit",
-      {
-        workspaceId
-        fileId
-        lineIndex
-        edit - text
-      }
+    self.lines[lineIndex].innerHTML = lineEdit;
+    self.socketHandler.sendCommand("edit",
+    {
+      id: self.id,
+      fileId: self.currentFile,
+      lineIndex: lineIndex,
+      lineEdit: lineEdit
+    }, function editCallback(response)
+    {
+      console.log(response);
+    });
 
-    )
   }
 
   /**
@@ -108,7 +113,7 @@ class Workspace
   abandon(id)
   {
     const self = this;
-    self.socketHandler.abandon("abandon",
+    self.socketHandler.sendCommand("abandon",
       {
         id: self.id,
         fileId: self.currentFile
@@ -120,6 +125,7 @@ class Workspace
   fetch(id)
   {
     const self = this;
+    self.currentFile = id;
     self.socketHandler.sendCommand("fetch",
     {
       id: self.id,

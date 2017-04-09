@@ -76,9 +76,10 @@ class Workspace
     const self = this;
     return new Promise(function(resolve, reject)
     {
-      if (self.loadedFiles.has(id))
+      if (self.loadedFiles.has(id.trim()))
       {
         resolve(self.loadedFiles.get(id));
+        return;
       }
 
       const file = self.files.get(id);

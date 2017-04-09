@@ -20,4 +20,13 @@ socket.emit("register", "editor", function connectionCallback()
   /* Creating the browser object */
   const workspace = new Workspace(socketHandler);
   workspace.populate();
+
+  $("#command-panel-execute").addEventListener("click", function(event)
+  {
+    const lineIndex = $("#command-panel-line").value;
+    const lineEdit = $("#command-panel-edit").value;
+    console.log(lineIndex, lineEdit);
+
+    workspace.edit(lineIndex, lineEdit);
+  });
 });

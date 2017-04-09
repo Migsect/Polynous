@@ -53,6 +53,9 @@ class WorkspaceManager
       case "abandon":
         self.commandAbandon(connection, data, callback);
         break;
+      case "edit":
+        self.commandEdit(connection, data, callback);
+        break;
       default:
         callback(false);
     }
@@ -90,9 +93,13 @@ class WorkspaceManager
     loadedFile.lines[Number(lineIndex)] = lineEdit;
 
     /* Sending the updates */
-    Array.from(loadedFile.connections.values()).forEach(function()
+    Array.from(loadedFile.connections.values()).forEach(function(otherConnection)
     {
-      connection.emit("update",
+      if (otherConnection.id === connection.id)
+      {
+        return;
+      }
+      otherConnection.emit("update",
       {
         type: "edit",
         data:
@@ -103,6 +110,7 @@ class WorkspaceManager
         }
       });
     });
+    callback(true);
   }
 
   /**
@@ -143,8 +151,8 @@ class WorkspaceManager
     }
     workspace.loadFile(fileId).then(function(loadedFile)
     {
-      callback(loadedFile.lines);
       loadedFile.connections.set(connection.id, connection);
+      callback(loadedFile.lines);
     }).catch(function()
     {
       callback(false);
