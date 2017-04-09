@@ -11,3 +11,8 @@
   width: 0.25em;
   background-color: rgb(0, 255, 0);
 }
+
+textarea {
+  width: 600px;
+  height: 1000px;
+}
