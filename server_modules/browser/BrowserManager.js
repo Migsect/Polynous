@@ -59,7 +59,12 @@ class BrowserManager
     }
     WorkspaceManager.createWorkspace(source).then(function(workspace)
     {
-      callback(workspace.url);
+      callback(
+      {
+        source: workspace.source,
+        url: workspace.url
+      });
+
     }).catch(function()
     {
       callback(false);

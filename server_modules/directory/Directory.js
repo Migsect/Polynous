@@ -25,6 +25,24 @@ class Directory extends DirectoryItem
     });
   }
 
+  getFileList()
+  {
+    const self = this;
+    let fileList = [];
+    self.items.forEach(function(item)
+    {
+      if (item.type === "directory")
+      {
+        fileList = fileList.concat(item.getFileList());
+      }
+      else
+      {
+        fileList.push(item);
+      }
+    });
+    return fileList;
+  }
+
 }
 
 function generate(source, name)

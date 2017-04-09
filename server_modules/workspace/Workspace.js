@@ -8,6 +8,7 @@ const Logger = require(process.cwd() + "/server_modules/Logger");
 
 /* Data Models */
 const directory = require(process.cwd() + "/server_modules/directory/Directory").generate;
+const generateLoadedFile = require("./LoadedFile").generate;
 
 /* Configuration options */
 const saveDir = require(process.cwd() + "/config/config").saveDir;
@@ -50,6 +51,16 @@ class Workspace
         value:
         {}
       },
+      files:
+      {
+        writable: true,
+        value: new Map()
+      },
+      loadedFiles:
+      {
+        writable: false,
+        value: new Map()
+      },
       url:
       {
         enumerable: true,
@@ -60,11 +71,40 @@ class Workspace
       }
     });
   }
+  loadFile(id)
+  {
+    const self = this;
+    return new Promise(function(resolve, reject)
+    {
 
+      const file = self.files.get(id);
+      Logger.debug("loading file:", file.id);
+      if (file === "undefined")
+      {
+        return reject();
+      }
+
+      generateLoadedFile(file).then(function(loadedFile)
+      {
+        self.loadedFiles.set(id, loadedFile);
+        Logger.debug("loaded file:", loadedFile);
+        resolve(loadedFile);
+      }).catch(function()
+      {
+        reject();
+      });
+
+    });
+  }
   regenerateDirectoryStructure()
   {
     const self = this;
     self.structure = directory(self.location, "/");
+    self.files = new Map();
+    self.structure.getFileList().forEach(function(item)
+    {
+      self.files.set(item.id, item);
+    });
   }
 }
 
