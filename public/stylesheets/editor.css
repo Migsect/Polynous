@@ -1,5 +1,54 @@
-div.app-panel {}
+div.app-panel {
+  background-color: gold;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  flex-direction: row;
+}
 
-div.project-panel {}
+div.project-panel {
+  width: 300px;
+  height: 100%;
+  flex: 0 1 auto;
+  padding: 0.25em;
+  background-color: black;
+  position: relative;
+}
 
-div.editor-panel {}
+div.editor-panel {
+  background-color: green;
+  height: 100%;
+  flex: 1 1 0px;
+}
+
+div.horizontal-resize-handle {
+  position: absolute;
+  background-color: red;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  width: 4px;
+}
+
+div.workspace-name {}
+
+div.workspace-name:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+div.workspace-file-name {}
+
+div.workspace-directory-items {
+  padding-left: 0.5em;
+  margin-left: 0.5em;
+  border-left-style: dotted;
+  border-width: 1px;
+  border-color: white;
+}
+
+div.workspace-directory-name {
+  font-weight: bolder;
+}

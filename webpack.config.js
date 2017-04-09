@@ -12,7 +12,7 @@ module.exports = {
   {
     rules: [
     {
-      test: /\.handlebars$/,
+      test: /\.hbs$/,
       loader: "handlebars-loader"
     },
     {
