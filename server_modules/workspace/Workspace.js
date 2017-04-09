@@ -76,6 +76,10 @@ class Workspace
     const self = this;
     return new Promise(function(resolve, reject)
     {
+      if (self.loadedFiles.has(id))
+      {
+        resolve(self.loadedFiles.get(id));
+      }
 
       const file = self.files.get(id);
       Logger.debug("loading file:", file.id);

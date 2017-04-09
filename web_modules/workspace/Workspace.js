@@ -33,7 +33,20 @@ class Workspace
       editorPanel:
       {
         value: document.querySelector(".editor-panel")
+      },
+      lines:
+      {
+        value: []
       }
+    });
+
+    socketHandler.addHandler("edit", function(data)
+    {
+      // const fileId = data.fileId;
+      const lineIndex = data.lineIndex;
+      const lineEdit = data.lineEdit;
+
+      self.lines[lineIndex].innerHTML = lineEdit;
     });
   }
 
@@ -75,6 +88,7 @@ class Workspace
     }, function fetchCallback(response)
     {
       self.clearEditor();
+      self.lines = [];
       response.forEach(function(line, index)
       {
         const lineElement = Utils.htmlToElement(textlineTemplate(
@@ -82,6 +96,7 @@ class Workspace
           index: index,
           text: line
         }));
+        self.lines.push(lineElement);
         self.editorPanel.appendChild(lineElement);
       });
     });
