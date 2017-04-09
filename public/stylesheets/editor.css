@@ -72,3 +72,11 @@ div.workspace-directory-name {
   border-left-style: solid;
   border-left-width: 2px;
 }
+
+div.command-panel {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 1em;
+}

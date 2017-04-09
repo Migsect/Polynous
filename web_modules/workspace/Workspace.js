@@ -37,6 +37,10 @@ class Workspace
       lines:
       {
         value: []
+      },
+      currentFile:
+      {
+        value: null
       }
     });
 
@@ -71,11 +75,46 @@ class Workspace
     });
   }
 
+  /**
+   * clears the editor
+   */
   clearEditor()
   {
     const self = this;
     self.editorPanel.innerHTML = "";
 
+  }
+
+  /**
+   * Sends edit to the server
+   */
+  edit(lineIndex, newText)
+  {
+    const self = this;
+    self.socketHandler.edit("edit",
+      {
+        workspaceId
+        fileId
+        lineIndex
+        edit - text
+      }
+
+    )
+  }
+
+  /**
+   * Abandons current file
+   */
+  abandon(id)
+  {
+    const self = this;
+    self.socketHandler.abandon("abandon",
+      {
+        id: self.id,
+        fileId: self.currentFile
+      }
+
+    )
   }
 
   fetch(id)
